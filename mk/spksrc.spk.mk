@@ -204,7 +204,8 @@ ifeq ($(PUBLISH_REPO_KEY),)
 	$(error Set PUBLISH_REPO_KEY in local.mk)
 endif
 	curl -k -A "spksrc v1.0; $(PUBLISH_REPO_KEY)" \
-	     -F "package=@$(SPK_FILE_NAME);filename=$(notdir $(SPK_FILE_NAME))" \
+	     -F "spk=@$(SPK_FILE_NAME);filename=$(notdir $(SPK_FILE_NAME))" \
+	     -F "nfo=@$(WORK_DIR)/INFO;filename=INFO" \
 	     $(PUBLISH_REPO_URL)
 endif
 ifeq ($(strip $(PUBLISH_METHOD)),FTP)
