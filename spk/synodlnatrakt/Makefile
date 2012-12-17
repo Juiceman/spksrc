@@ -45,4 +45,4 @@ couchpotatoserver_extra_install: $(STAGING_DIR)/share/SynoDLNAtrakt
 $(STAGING_DIR)/share/SynoDLNAtrakt:
 	install -m 755 -d $(STAGING_DIR)/share
 	cd $(STAGING_DIR)/share && git clone https://github.com/cytec/SynoDLNAtrakt.git SynoDLNAtrakt
-	rm -fr $(STAGING_DIR)/share/SynoDLNAtrakt/.git $(STAGING_DIR)/share/SynoDLNAtrakt/.gitignore
+	rm -fr $(STAGING_DIR)/share/SynoDLNAtrakt/.git $(STAGING_DIR)/share/SynoDLNAtrakt/.gitignore	

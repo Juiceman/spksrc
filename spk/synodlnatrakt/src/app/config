@@ -2,7 +2,7 @@
     ".url": {
         "com.cytec.packages.synodlnatrakt": {
             "title": "SynoDLNAtrakt",
-            "desc": "SynoDLNAtralt",
+            "desc": "SynoDLNAtrakt",
             "icon": "images/synodlnatrakt-{0}.png",
             "type": "url",
             "url": "3rdparty/synodlnatrakt/synodlnatrakt.cgi",

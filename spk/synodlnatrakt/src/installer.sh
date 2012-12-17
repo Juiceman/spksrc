@@ -31,6 +31,10 @@ postinst ()
     # Create a Python virtualenv
     ${VIRTUALENV} --system-site-packages ${INSTALL_DIR}/env > /dev/null
 
+    # Install configobj
+    ${INSTALL_DIR}/env/bin/pip install -U -b ${INSTALL_DIR}/var/build configobj > /dev/null
+    rm -fr ${INSTALL_DIR}/var/build
+
     # Create user
     adduser -h ${INSTALL_DIR}/var -g "${DNAME} User" -G ${GROUP} -s /bin/sh -S -D ${USER}
 
