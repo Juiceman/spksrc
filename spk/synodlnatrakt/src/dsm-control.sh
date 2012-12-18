@@ -11,9 +11,9 @@ PATH="${INSTALL_DIR}/bin:${INSTALL_DIR}/env/bin:${PYTHON_DIR}/bin:/usr/local/bin
 USER="synodlnatrakt"
 PYTHON="${INSTALL_DIR}/env/bin/python"
 SYNODLNATRAKT="${INSTALL_DIR}/share/SynoDLNAtrakt/SynoDLNAtrakt.py"
-CFG_FILE="${INSTALL_DIR}/share/SynoDLNAtrakt/SynoDLNAtrakt.ini"
-PID_FILE="${INSTALL_DIR}/share/SynoDLNAtrakt/synodlnatrakt.pid"
-LOG_FILE="${INSTALL_DIR}/share/SynoDLNAtrakt/logs/SynoDLNAtrakt.log"
+CFG_FILE="${INSTALL_DIR}/var/config.ini"
+PID_FILE="${INSTALL_DIR}/var/synodlnatrakt.pid"
+LOG_FILE="${INSTALL_DIR}/var/SynoDLNAtrakt.log"
 
 
 start_daemon ()

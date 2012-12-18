@@ -7,7 +7,7 @@ DSM_UI_DIR = app
 DEPENDS  = cross/bzip2 cross/python cross/libjpeg cross/pil
 
 MAINTAINER = cytec
-DESCRIPTION = Dafuq is this?
+DESCRIPTION = First try of SynoDLNAtrakt SPK creation
 ADMIN_PORT = 1337
 RELOAD_UI = yes
 DISPLAY_NAME = SynoDLNAtrakt
@@ -32,7 +32,7 @@ include ../../mk/spksrc.spk.mk
 .PHONY: couchpotato_extra_install
 couchpotatoserver_extra_install: $(STAGING_DIR)/share/SynoDLNAtrakt
 	install -m 755 -d $(STAGING_DIR)/var
-	install -m 600 src/config.ini $(STAGING_DIR)/var/config.ini
+	install -m 600 src/settings.conf $(STAGING_DIR)/var/config.ini
 	install -m 755 -d $(STAGING_DIR)/app
 	install -m 644 src/app/config $(STAGING_DIR)/app/config
 	install -m 755 src/app/synodlnatrakt.cgi.py $(STAGING_DIR)/app/synodlnatrakt.cgi
