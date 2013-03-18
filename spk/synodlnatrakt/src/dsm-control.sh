@@ -18,7 +18,7 @@ LOG_FILE="${INSTALL_DIR}/var/SynoDLNAtrakt.log"
 
 start_daemon ()
 {
-    su - ${USER} -c "PATH=${PATH} ${PYTHON} ${SYNODLNATRAKT} start"
+    su - ${USER} -c "PATH=${PATH} ${PYTHON} ${SYNODLNATRAKT} start --config=${CFG_FILE}"
 }
 
 stop_daemon ()

@@ -29,8 +29,8 @@ override ARCH=
 
 include ../../mk/spksrc.spk.mk
 
-.PHONY: couchpotato_extra_install
-couchpotatoserver_extra_install: $(STAGING_DIR)/share/SynoDLNAtrakt
+.PHONY: synodlnatrakt_extra_install
+synodlnatrakt_extra_install: $(STAGING_DIR)/share/SynoDLNAtrakt
 	install -m 755 -d $(STAGING_DIR)/var
 	install -m 600 src/settings.conf $(STAGING_DIR)/var/config.ini
 	install -m 755 -d $(STAGING_DIR)/app
