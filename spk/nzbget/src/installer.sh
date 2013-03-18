@@ -16,11 +16,6 @@ TMP_DIR="${SYNOPKG_PKGDEST}/../../@tmp"
 
 preinst ()
 {
-    # Installation wizard requirements
-    if [ "${SYNOPKG_PKG_STATUS}" != "UPGRADE" ] && [ ! -d "${wizard_download_dir}" ]; then
-        exit 1
-    fi
-
     exit 0
 }
 
@@ -35,8 +30,8 @@ postinst ()
     # Create user
     adduser -h ${INSTALL_DIR}/var -g "${DNAME} User" -G ${GROUP} -s /bin/sh -S -D ${USER}
 
-    # Edit the configuration according to the wizzard
-    sed -i -e "s|@download_dir@|${wizard_download_dir}|g" ${CFG_FILE}
+    # Edit the configuration according to the wizard
+    sed -i -e "s|@download_dir@|${wizard_download_dir:=/volume1/downloads}|g" ${CFG_FILE}
     sed -i -e "s/@server_password@/${wizard_server_password:=nzbget}/g" ${CFG_FILE}
 
     # Correct the files ownership
@@ -72,8 +67,8 @@ preupgrade ()
     # Stop the package
     ${SSS} stop > /dev/null
 
-    # Revision 4 introduces backward incompatible changes
-    if [ `echo ${SYNOPKG_OLD_PKGVER} | sed -r "s/^.*-([0-9]+)$/\1/"` -lt 4 ]; then
+    # Revision 7 introduces backward incompatible changes
+    if [ `echo ${SYNOPKG_OLD_PKGVER} | sed -r "s/^.*-([0-9]+)$/\1/"` -lt 7 ]; then
         echo "Please uninstall previous version, no update possible"
         exit 1
     fi

@@ -1,5 +1,5 @@
 PKG_NAME = openssl
-PKG_VERS = 1.0.0j
+PKG_VERS = 1.0.0k
 PKG_EXT = tar.gz
 PKG_DIST_NAME = $(PKG_NAME)-$(PKG_VERS).$(PKG_EXT)
 PKG_DIST_SITE = http://www.openssl.org/source
@@ -19,10 +19,9 @@ STAGING_INSTALL_PREFIX := $(INSTALL_DIR)
 
 include ../../mk/spksrc.cross-cc.mk
 
-ifneq ($(findstring $(ARCH), bromolow cedarview x86),)
-OPENSSL_ARCH = linux-elf
-else
 OPENSSL_ARCH = linux-generic32
+ifneq ($(findstring $(ARCH), bromolow cedarview x86),)
+OPENSSL_ARCH = linux-x86_64
 endif
 
 .PHONY: myConfigure
@@ -32,4 +31,3 @@ myConfigure:
 .PHONY: myInstall
 myInstall:
 	$(RUN) $(MAKE) install_sw INSTALL_PREFIX=$(INSTALL_DIR)
-

@@ -30,7 +30,7 @@ postinst ()
     # Create user
     adduser -h ${INSTALL_DIR}/var -g "${DNAME} User" -G ${GROUP} -s /bin/sh -S -D ${USER}
 
-    # Edit the configuration according to the wizzard
+    # Edit the configuration according to the wizard
     sed -i -e "s/@username@/${wizard_username:=admin}/g" ${INSTALL_DIR}/var/configs/znc.conf
     sed -i -e "s/@password@/${wizard_password:=admin}/g" ${INSTALL_DIR}/var/configs/znc.conf
 
@@ -45,6 +45,9 @@ postinst ()
 
 preuninst ()
 {
+    # Stop the package
+    ${SSS} stop > /dev/null
+
     # Remove the user (if not upgrading)
     if [ "${SYNOPKG_PKG_STATUS}" != "UPGRADE" ]; then
         delgroup ${USER} ${GROUP}
@@ -56,9 +59,6 @@ preuninst ()
 
 postuninst ()
 {
-    # Stop the package
-    ${SSS} stop > /dev/null
-
     # Remove link
     rm -f ${INSTALL_DIR}
 

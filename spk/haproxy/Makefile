@@ -1,12 +1,11 @@
 SPK_NAME = haproxy
-SPK_VERS = 1.5~dev14
-SPK_REV = 3
+SPK_VERS = 1.5~dev17
+SPK_REV = 7
 SPK_ICON = src/haproxy.png
 DSM_UI_DIR = app
-CHANGELOG = "1. Update to dev14\\\n2. Fix certificate generation in some cases\\\n3. Change certificate permissions"
 
-DEPENDS = cross/haproxy
-SPK_DEPENDS = "python>2.7.3-2"
+DEPENDS = cross/$(SPK_NAME)
+SPK_DEPENDS = "python>2.7.3-3"
 
 MAINTAINER = SynoCommunity
 DESCRIPTION = HAProxy is a free, very fast and reliable solution offering high availability, load balancing, and proxying for TCP and HTTP-based applications.

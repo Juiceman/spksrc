@@ -1,6 +1,6 @@
 SPK_NAME = python
 SPK_VERS = 2.7.3
-SPK_REV = 3
+SPK_REV = 5
 SPK_ICON = src/python.png
 
 DEPENDS  = cross/busybox cross/$(SPK_NAME)
@@ -8,10 +8,6 @@ DEPENDS += cross/distribute cross/distutils2 cross/pip cross/virtualenv cross/py
 DEPENDS += cross/pycrypto cross/pycurl cross/pil cross/cheetah cross/yenc
 DEPENDS += cross/sqlalchemy cross/pyaudio cross/pyalsa cross/lxml cross/twisted
 DEPENDS += cross/zope.interface cross/markupsafe
-# Add libtorrent for ARCHs that support it
-ifneq ($(findstring $(ARCH),88f5281 powerpc ppc824x ppc853x ppc854x),$(ARCH))
-DEPENDS += cross/libtorrent
-endif
 
 MAINTAINER = SynoCommunity
 DESCRIPTION = Python Programming Language. This package is not startable, it is just required by other packages as dependency.
@@ -20,7 +16,7 @@ DESCRIPTION_SPN = Lenguaje de programación Python. Este paquente no se inicia, 
 RELOAD_UI = yes
 STARTABLE = no
 DISPLAY_NAME = Python
-CHANGELOG = "1. Update existing modules\\\n2. Add modules distutils2, Twisted, zope.interface and MarkupSafe\\\n3. Replace setuptools with distribute\\\n4. Add libtorrent for some architectures\\\n5. Enable unicode usc4\\\n6. Make the SPK not startable"
+CHANGELOG = "1. Update modules\\\n2. Fix for DSM 4.2"
 
 HOMEPAGE   = http://www.python.org/
 LICENSE    =

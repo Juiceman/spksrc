@@ -1,14 +1,16 @@
 SPK_NAME = squidguard
-SPK_VERS = 1.00
+SPK_VERS = 1.5
 SPK_REV = 1
 SPK_ICON = src/squidguard.png
 BETA = 1
 
 DEPENDS = cross/zlib cross/c_icap cross/busybox cross/unrar cross/squidclamav cross/berkeleydb cross/squidguard cross/squid cross/squidguardmanager
 
+SPK_DEPENDS = "AntiVirus>1.2"
+
 MAINTAINER = SynoCommunity
-DESCRIPTION = SquidGuard is a URL redirector used to use blacklists with the proxysoftware Squid.
-DESCRIPTION_FRE = SquidGuard est un proxy HTTP, basé sur squid, qui permet de filtrer les accès selon une liste noire.
+DESCRIPTION = SquidGuard is a URL redirector used to use blacklists with the proxysoftware Squid. This package also includes SquidClamav for viruses protection and SquidGuard Manager.
+DESCRIPTION_FRE = SquidGuard est un proxy HTTP, basé sur squid, qui permet de filtrer les accès selon une liste noire. Ce paquet contient également SquidClamav pour une protection antivirus et SquidGuard Manager.
 RELOAD_UI = no
 DISPLAY_NAME = SquidGuard
 
@@ -21,6 +23,9 @@ ADDITIONAL_SCRIPTS =
 
 INSTALL_PREFIX = /usr/local/$(SPK_NAME)
 POST_STRIP_TARGET = xz-compress
+
+BUSYBOX_CONFIG = usrmng
+ENV += BUSYBOX_CONFIG="$(BUSYBOX_CONFIG)"
 
 include ../../mk/spksrc.spk.mk
 
@@ -39,7 +44,11 @@ xz-compress:
 	install -m 755 -d $(STAGING_DIR)/var/db
 	install -m 755 src/update_db.sh $(STAGING_DIR)/bin/
 	install -m 755 src/etc/* $(STAGING_DIR)/etc/
-	install -m 644 app/config $(STAGING_DIR)/share/www/squidguardmgr/
+	install -m 644 src/app/config $(STAGING_DIR)/share/www/squidguardmgr/
+	install -m 755 src/app/squidGuard.cgi $(STAGING_DIR)/share/www/squidguardmgr/
+	install -m 644 src/app/babel.* $(STAGING_DIR)/share/www/squidguardmgr/
+	install -m 644 src/app/synocommunity.png $(STAGING_DIR)/share/www/squidguardmgr/
+	install -m 644 src/app/blocked.gif $(STAGING_DIR)/share/www/squidguardmgr/
 	for size in 16 24 32 48 ; \
 	do \
 	    convert $(SPK_ICON) -thumbnail $${size}x$${size} -transparent white \
