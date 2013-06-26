@@ -41,6 +41,12 @@ postinst ()
     # Correct the files ownership
     chown -R ${USER}:root ${SYNOPKG_PKGDEST}
 
+
+    #check for debugmode and anable it...
+    sed -i.backup 's/loglevel_mediaservice.*/loglevel_mediaservice="3"/g' /var/packages/MediaServer/etc/dmsinfo.conf
+    /var/packages/MediaServer/scripts/start-stop-status stop
+    /var/packages/MediaServer/scripts/start-stop-status start
+
     exit 0
 }
 
@@ -62,6 +68,10 @@ postuninst ()
 {
     # Remove link
     rm -f ${INSTALL_DIR}
+
+    #remove debugmode stuff from mediaserver
+    rm -rf /var/packages/MediaServer/etc/dmsinfo.conf
+    cp /var/packages/MediaServer/etc/dmsinfo.conf.backup /var/packages/MediaServer/etc/dmsinfo.conf
 
     exit 0
 }

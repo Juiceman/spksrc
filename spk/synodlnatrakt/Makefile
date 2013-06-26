@@ -4,10 +4,13 @@ SPK_REV = 3
 SPK_ICON = src/synodlnatrakt.png
 DSM_UI_DIR = app
 
-DEPENDS  = cross/bzip2 cross/python cross/libjpeg cross/pil
+DEPENDS  =
+SPK_DEPENDS = "python>2.7.3-3", "MediaServer"
+
 
 MAINTAINER = cytec
-DESCRIPTION = First try of SynoDLNAtrakt SPK creation
+DESCRIPTION = SynoDLNAtrakt is the easyest way to scrobble watched TV-Shwos/Movies to trakt directly from your DiskStation.
+DESCRIPTION_GER = SynoDLNAtrakt scrobbled Serien/Filme die über DLNA geschaut wurden direkt trakt, ünterstützt den trakt 2Way-Sync und bietet ein einfaches Webinterface zur Ansicht der lokalen Datenbank.
 ADMIN_PORT = 1337
 RELOAD_UI = yes
 DISPLAY_NAME = SynoDLNAtrakt
@@ -19,8 +22,7 @@ INSTALLER_SCRIPT = src/installer.sh
 SSS_SCRIPT       = src/dsm-control.sh
 
 INSTALL_PREFIX = /usr/local/$(SPK_NAME)
-PYTHON_LIB_DIR = lib/python2.7
-PLIST_TRANSFORM = sed "s%@PYTHON_SITE_PACKAGES@%$(PYTHON_LIB_DIR)/site-packages%"
+COPY_TARGET = nop
 
 POST_STRIP_TARGET = synodlnatrakt_extra_install
 
@@ -45,4 +47,4 @@ synodlnatrakt_extra_install: $(STAGING_DIR)/share/SynoDLNAtrakt
 $(STAGING_DIR)/share/SynoDLNAtrakt:
 	install -m 755 -d $(STAGING_DIR)/share
 	cd $(STAGING_DIR)/share && git clone https://github.com/cytec/SynoDLNAtrakt.git SynoDLNAtrakt
-	rm -fr $(STAGING_DIR)/share/SynoDLNAtrakt/.git $(STAGING_DIR)/share/SynoDLNAtrakt/.gitignore	
+	rm -fr $(STAGING_DIR)/share/SynoDLNAtrakt/.git $(STAGING_DIR)/share/SynoDLNAtrakt/.gitignore
