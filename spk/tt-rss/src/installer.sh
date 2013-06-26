@@ -51,11 +51,13 @@ postinst ()
     if [ "${SYNOPKG_PKG_STATUS}" == "INSTALL" ]; then
         ${MYSQL} -u root -p"${wizard_mysql_password_root}" -e "CREATE DATABASE ${MYSQL_DATABASE}; GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'localhost' IDENTIFIED BY '${wizard_mysql_password_ttrss}';"
         ${MYSQL} -u ${MYSQL_USER} -p"${wizard_mysql_password_ttrss}" ${MYSQL_DATABASE} < ${WEB_DIR}/${PACKAGE}/schema/ttrss_schema_mysql.sql
-        sed -e "s|define('DB_TYPE', \"pgsql\");|define('DB_TYPE', 'mysql');|" \
-            -e "s|define('DB_USER', \"fox\");|define('DB_USER', '${MYSQL_USER}');|" \
-            -e "s|define('DB_NAME', \"fox\");|define('DB_NAME', '${MYSQL_DATABASE}');|" \
-            -e "s|define('DB_PASS', \"XXXXXX\");|define('DB_PASS', '${wizard_mysql_password_ttrss}');|" \
-            -e "s|define('SELF_URL_PATH', 'http://yourserver/tt-rss/');|define('SELF_URL_PATH', 'http://${wizard_domain_name}/${PACKAGE}/');|" \
+        single_user_mode=$([ "${wizard_single_user}" == "true" ] && echo "true" || echo "false")
+        sed -e "s|define('DB_TYPE', \".*\");|define('DB_TYPE', 'mysql');|" \
+            -e "s|define('DB_USER', \".*\");|define('DB_USER', '${MYSQL_USER}');|" \
+            -e "s|define('DB_NAME', \".*\");|define('DB_NAME', '${MYSQL_DATABASE}');|" \
+            -e "s|define('DB_PASS', \".*\");|define('DB_PASS', '${wizard_mysql_password_ttrss}');|" \
+            -e "s|define('SINGLE_USER_MODE', .*);|define('SINGLE_USER_MODE', ${single_user_mode});|" \
+            -e "s|define('SELF_URL_PATH', '.*');|define('SELF_URL_PATH', 'http://${wizard_domain_name}/${PACKAGE}/');|" \
             ${WEB_DIR}/${PACKAGE}/config.php-dist > ${WEB_DIR}/${PACKAGE}/config.php
     fi
 
@@ -112,13 +114,21 @@ preupgrade ()
 
 postupgrade ()
 {
-    # Restore the configuration file if it has not been updated
-    old_config_version=$(grep 'CONFIG_VERSION' ${TMP_DIR}/${PACKAGE}/config.php | sed "s/define('CONFIG_VERSION', \([0-9]\+\));/\1/")
-    new_config_version=$(grep 'CONFIG_VERSION' ${WEB_DIR}/${PACKAGE}/config.php-dist | sed "s/define('CONFIG_VERSION', \([0-9]\+\));/\1/")
-    if [ ${old_config_version} -ne ${new_config_version} ]; then
-        echo "Configuration file web/${PACKAGE}/config.php needs to be updated manually. See web/${PACKAGE}/config.php-dist for changes to apply."
-    fi
-    mv ${TMP_DIR}/${PACKAGE}/config.php ${WEB_DIR}/${PACKAGE}/
+    # Restore the configuration file
+    mv ${TMP_DIR}/${PACKAGE}/config.php ${WEB_DIR}/${PACKAGE}/config-bak.php
+    cp ${WEB_DIR}/${PACKAGE}/config.php-dist ${WEB_DIR}/${PACKAGE}/config.php
+
+    # Parse configuration and save to new config
+    while read line
+    do
+        key=`echo $line | sed -n "s|^define('\(.*\)',\(.*\));.*|\1|p"`
+        val=`echo $line | sed -n "s|^define('\(.*\)',\(.*\));.*|\2|p"`
+        if [ "$key" == "" ]; then
+            continue
+        fi
+        sed -i "s|define('$key', .*);|define('$key', $val);|g" ${WEB_DIR}/${PACKAGE}/config.php
+    done < ${WEB_DIR}/${PACKAGE}/config-bak.php
+
     rm -fr ${TMP_DIR}/${PACKAGE}
 
     exit 0
