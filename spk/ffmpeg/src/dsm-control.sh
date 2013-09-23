@@ -5,24 +5,29 @@ PACKAGE="ffmpeg"
 
 # Others
 INSTALL_DIR="/usr/local/${PACKAGE}/bin/"
-LINK_TARGET="/usr/bin/${PACKAGE}"
+FFMPEG_TARGET="/usr/bin/${PACKAGE}"
+FFSERVER_TARGET="/usr/bin/ffserver"
 
 FFPROBE_TARGET="/usr/bin/ffprobe"
 
 start_daemon ()
 {
-    if [ ! -e "${LINK_TARGET}" ]; then
-        ln -s ${INSTALL_DIR}/ffmpeg ${LINK_TARGET}
+    if [ ! -e "${FFMPEG_TARGET}" ]; then
+        ln -s ${INSTALL_DIR}/ffmpeg ${FFMPEG_TARGET}
     fi
     if [ ! -e "${FFPROBE_TARGET}" ]; then
         ln -s ${INSTALL_DIR}/ffprobe ${FFPROBE_TARGET}
+    fi
+    if [ ! -e "${FFSERVER_TARGET}" ]; then
+        ln -s ${INSTALL_DIR}/ffserver ${FFSERVER_TARGET}
     fi
 }
 
 stop_daemon ()
 {
-    rm -f ${LINK_TARGET}
+    rm -f ${FFMPEG_TARGET}
     rm -f ${FFPROBE_TARGET}
+    rm -f ${FFSERVER_TARGET}
 }
 
 
@@ -36,7 +41,7 @@ case $1 in
         exit 0
     ;;
     status)
-    if [ -e ${LINK_TARGET} ]; then
+    if [ -e ${FFMPEG_TARGET} ]; then
         exit 0
     else
         exit 1
