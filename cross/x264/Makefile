@@ -14,4 +14,8 @@ LICENSE  =
 
 CONFIGURE_ARGS = --enable-static --disable-asm --prefix=$(INSTALL_PREFIX)
 
+ifeq ($(findstring $(ARCH),88f5281),$(ARCH))
+ADDITIONAL_CFLAGS = -O0
+endif
+
 include ../../mk/spksrc.cross-cc.mk
