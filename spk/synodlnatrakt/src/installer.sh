@@ -33,9 +33,6 @@ postinst ()
     # Create a Python virtualenv
     ${VIRTUALENV} --system-site-packages ${INSTALL_DIR}/env > /dev/null
 
-    #clone the repository
-    ${GIT} clone -q git://github.com/cytec/SynoDLNAtrakt.git ${INSTALL_DIR}/share/SynoDLNAtrakt
-
     # Install configobj
     ${INSTALL_DIR}/env/bin/pip install -U -b ${INSTALL_DIR}/var/build configobj > /dev/null
     rm -fr ${INSTALL_DIR}/var/build

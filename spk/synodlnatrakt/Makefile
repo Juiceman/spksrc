@@ -1,11 +1,11 @@
 SPK_NAME = synodlnatrakt
 SPK_VERS = $(shell date +%Y%m%d)
-SPK_REV = 1
+SPK_REV = 2
 SPK_ICON = src/synodlnatrakt.png
 DSM_UI_DIR = app
 
 DEPENDS  =
-SPK_DEPENDS = "python>2.7.3-3:git:MediaServer"
+SPK_DEPENDS = "python>2.7.3-3:git"
 
 
 MAINTAINER = cytec
@@ -44,3 +44,7 @@ synodlnatrakt_extra_install:
 		convert $(SPK_ICON) -thumbnail $${size}x$${size} \
 		        $(STAGING_DIR)/app/images/$(SPK_NAME)-$${size}.png ; \
 	done
+
+$(STAGING_DIR)/share/SynoDLNAtrakt:
+	install -m 755 -d $(STAGING_DIR)/share
+	cd $(STAGING_DIR)/share && git clone https://github.com/cytec/SynoDLNAtrakt.git SynoDLNAtrakt
