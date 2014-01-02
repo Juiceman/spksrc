@@ -2,12 +2,13 @@
 
 # Package
 PACKAGE="htpcmanager"
-DNAME="HTPC-Manager"
+DNAME="HTPC Manager"
 
 # Others
 INSTALL_DIR="/usr/local/${PACKAGE}"
 PYTHON_DIR="/usr/local/python"
-PATH="${INSTALL_DIR}/bin:${INSTALL_DIR}/env/bin:${PYTHON_DIR}/bin:/usr/local/bin:/bin:/usr/bin:/usr/syno/bin"
+GIT_DIR="/usr/local/git"
+PATH="${INSTALL_DIR}/env/bin:${INSTALL_DIR}/bin:${PYTHON_DIR}/bin:${GIT_DIR}/bin:${PATH}"
 USER="htpcmanager"
 PYTHON="${INSTALL_DIR}/env/bin/python"
 HTPCMANAGER="${INSTALL_DIR}/share/HTPC-Manager/Htpc.py"
@@ -18,7 +19,7 @@ LOG_FILE="${DATA_DIR}/htpcmanager.log"
 
 start_daemon ()
 {
-    su - ${USER} -c "PATH=${PATH} ${PYTHON} ${HTPCMANAGER} --datadir ${DATA_DIR} --pid ${PID_FILE} --daemon"
+    su - ${USER} -c "PATH=${PATH} ${PYTHON} ${HTPCMANAGER} --datadir ${DATA_DIR} --pid ${PID_FILE} --daemon --port 8087"
 }
 
 stop_daemon ()

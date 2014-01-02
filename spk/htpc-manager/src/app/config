@@ -1,12 +1,15 @@
 {
     ".url": {
-        "com.cytec.packages.htpcmanager": {
-            "title": "HTPC-Manager",
-            "desc": "HTPC-Manager",
+        "com.synocommunity.packages.htpcmanager": {
+            "title": "HTPC Manager",
+            "desc": "HTPC Manager",
             "icon": "images/htpcmanager-{0}.png",
             "type": "url",
-            "url": "3rdparty/htpcmanager/htpcmanager.cgi",
-            "allUsers": true
+            "protocol": "http",
+            "port": "8087",
+            "url": "/",
+            "allUsers": true,
+            "grantPrivilege": "local"
         }
     }
 }
