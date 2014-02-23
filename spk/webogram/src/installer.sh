@@ -11,6 +11,8 @@ NODE_DIR="/usr/local/node"
 PATH="${INSTALL_DIR}/bin:${INSTALL_DIR}/env/bin:${NODE_DIR}/bin:/usr/local/bin:/bin:/usr/bin:/usr/syno/bin"
 NODE="${NODE_DIR}/bin/node"
 NPM="${NODE_DIR}/bin/npm"
+USER="webogram"
+GROUP="users"
 TMP_DIR="${SYNOPKG_PKGDEST}/../../@tmp"
 
 
@@ -23,6 +25,12 @@ postinst ()
 {
     # Link
     ln -s ${SYNOPKG_PKGDEST} ${INSTALL_DIR}
+
+    # Create user
+    adduser -h ${INSTALL_DIR}/var -g "${DNAME} User" -G ${GROUP} -s /bin/sh -S -D ${USER}
+
+    # Correct the files ownership
+    chown -R ${USER}:root ${SYNOPKG_PKGDEST}
 
     exit 0
 }

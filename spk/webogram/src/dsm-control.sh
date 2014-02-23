@@ -14,7 +14,7 @@ WEBOGRAM="${INSTALL_DIR}/share/webogram/server.js"
 
 start_daemon ()
 {
-   PATH=${PATH} cd ${INSTALL_DIR}/share/${PACKAGE} && screen ${NODE} ${WEBOGRAM}
+    su - ${USER} -c "PATH=${PATH} cd ${INSTALL_DIR}/share/${PACKAGE} &&  screen ${NODE} ${WEBOGRAM}"
 }
 
 stop_daemon ()
