@@ -29,8 +29,8 @@ override ARCH=
 
 include ../../mk/spksrc.spk.mk
 
-.PHONY: sickbeard_extra_install
-sickbeard_extra_install: $(STAGING_DIR)/share/webogram
+.PHONY: webogram_extra_install
+webogram_extra_install: $(STAGING_DIR)/share/webogram
 	install -m 755 -d $(STAGING_DIR)/app/images
 	for size in 16 24 32 48; do \
 		convert $(SPK_ICON) -thumbnail $${size}x$${size} \

@@ -10,7 +10,7 @@ NODE_DIR="/usr/local/node"
 PATH="${INSTALL_DIR}/bin:${INSTALL_DIR}/env/bin:${NODE_DIR}/bin:/usr/local/bin:/bin:/usr/bin:/usr/syno/bin"
 USER="webogram"
 NODE="${NODE_DIR}/bin/node"
-WEBOGRAM="${INSTALL_DIR}/share/server.js"
+WEBOGRAM="${INSTALL_DIR}/share/webogram/server.js"
 
 start_daemon ()
 {
