@@ -4,7 +4,7 @@ SPK_REV = 5
 SPK_ICON = src/webogram.png
 DSM_UI_DIR = app
 
-DEPENDS  =
+DEPENDS  = cross/screen cross/busybox
 SPK_DEPENDS = "node"
 
 MAINTAINER = SynoCommunity
