@@ -3,7 +3,7 @@ SPK_VERS = 0.10.6
 SPK_REV = 1
 SPK_ICON = src/nodejs.png
 
-DEPENDS  = cross/$(SPK_NAME)
+DEPENDS  = cross/busybox cross/$(SPK_NAME)
 
 MAINTAINER = SynoCommunity
 DESCRIPTION = Node.js is a platform built on Chrome\'s JavaScript runtime for easily building fast, scalable network applications.
