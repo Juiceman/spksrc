@@ -8,24 +8,24 @@ DNAME="webogram"
 INSTALL_DIR="/usr/local/${PACKAGE}"
 NODE_DIR="/usr/local/node"
 PATH="${INSTALL_DIR}/bin:${INSTALL_DIR}/env/bin:${NODE_DIR}/bin:/usr/local/bin:/bin:/usr/bin:/usr/syno/bin"
-USER="webogram"
+USER="root"
 NODE="${NODE_DIR}/bin/node"
 WEBOGRAM="${INSTALL_DIR}/share/webogram/server.js"
 
 start_daemon ()
 {
-    su - ${USER} -c "PATH=${PATH} cd ${INSTALL_DIR}/share/${PACKAGE} &&  screen ${NODE} ${WEBOGRAM}"
+    su - ${USER} -c "PATH=${PATH} cd ${INSTALL_DIR}/share/${PACKAGE} &&  ${INSTALL_DIR}/bin/screen -dmS webogram ${NODE} ${WEBOGRAM}"
 }
 
 stop_daemon ()
 {
-    kill `ps | grep "${WEBOGRAM}" | grep -v grep | cut -c2-6`
-    wait_for_status 1 20 || kill -9 `ps | grep "${WEBOGRAM}" | grep -v grep | cut -c2-6`
+    kill `ps | grep "${WEBOGRAM}" | grep -v grep | cut -c1-6`
+    wait_for_status 1 20 || kill -9 `ps | grep "${WEBOGRAM}" | grep -v grep | cut -c1-6`
 }
 
 daemon_status ()
 {
-    if  kill -0 `ps | grep "${WEBOGRAM}" | grep -v grep | cut -c2-6` > /dev/null 2>&1; then
+    if  kill -0 `ps | grep "${WEBOGRAM}" | grep -v grep | cut -c1-6` > /dev/null 2>&1; then
         return
     fi
     return 1

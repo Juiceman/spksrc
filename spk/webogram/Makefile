@@ -1,10 +1,10 @@
 SPK_NAME = webogram
 SPK_VERS = $(shell date +%Y%m%d)
-SPK_REV = 5
+SPK_REV = 6
 SPK_ICON = src/webogram.png
 DSM_UI_DIR = app
 
-DEPENDS  = cross/screen cross/busybox
+DEPENDS  = cross/screen
 SPK_DEPENDS = "node"
 
 MAINTAINER = SynoCommunity
@@ -21,11 +21,8 @@ SSS_SCRIPT       = src/dsm-control.sh
 
 INSTALL_PREFIX = /usr/local/$(SPK_NAME)
 
-COPY_TARGET = nop
 POST_STRIP_TARGET = webogram_extra_install
 
-# Pure Python package, make sure ARCH is not defined
-override ARCH=
 
 include ../../mk/spksrc.spk.mk
 
