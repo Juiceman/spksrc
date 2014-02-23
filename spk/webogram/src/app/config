@@ -1,0 +1,14 @@
+{
+    ".url": {
+        "com.synocommunity.packages.webogram": {
+            "title": "Webogram",
+            "desc": "Telegram Messenger Web UI",
+            "icon": "images/webogram-{0}.png",
+            "type": "url",
+            "protocol": "http",
+            "port": "8000",
+            "url": "/app/index.html",
+            "allUsers": true
+        }
+    }
+}
