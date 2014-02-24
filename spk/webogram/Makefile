@@ -5,12 +5,12 @@ SPK_ICON = src/webogram.png
 DSM_UI_DIR = app
 
 DEPENDS  =
-SPK_DEPENDS =
 
-MAINTAINER = SynoCommunity
+MAINTAINER = cytec
 DESCRIPTION = UNOFFICIAL Telegram Web App
-ADMIN_PORT = 8000
+ADMIN_URL = /webogram/
 RELOAD_UI = yes
+STARTABLE = no
 DISPLAY_NAME = Webogram
 
 HOMEPAGE   = https://github.com/zhukov/webogram
@@ -19,12 +19,15 @@ LICENSE    = GPL
 INSTALLER_SCRIPT = src/installer.sh
 SSS_SCRIPT       = src/dsm-control.sh
 
-STARTABLE = no
+INSTALL_DEP_SERVICES = apache-web
 
 INSTALL_PREFIX = /usr/local/$(SPK_NAME)
 
+COPY_TARGET = nop
 POST_STRIP_TARGET = webogram_extra_install
 
+# Pure HMTL package, make sure ARCH is not defined
+override ARCH=
 
 include ../../mk/spksrc.spk.mk
 
