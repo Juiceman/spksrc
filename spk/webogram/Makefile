@@ -4,8 +4,8 @@ SPK_REV = 6
 SPK_ICON = src/webogram.png
 DSM_UI_DIR = app
 
-DEPENDS  = cross/screen
-SPK_DEPENDS = "node"
+DEPENDS  =
+SPK_DEPENDS =
 
 MAINTAINER = SynoCommunity
 DESCRIPTION = UNOFFICIAL Telegram Web App
@@ -18,6 +18,8 @@ LICENSE    = GPL
 
 INSTALLER_SCRIPT = src/installer.sh
 SSS_SCRIPT       = src/dsm-control.sh
+
+STARTABLE = no
 
 INSTALL_PREFIX = /usr/local/$(SPK_NAME)
 
@@ -37,4 +39,5 @@ webogram_extra_install: $(STAGING_DIR)/share/webogram
 $(STAGING_DIR)/share/webogram:
 	install -m 755 -d $(STAGING_DIR)/share
 	cd $(STAGING_DIR)/share && git clone https://github.com/zhukov/webogram.git webogram
+	cd $(STAGING_DIR)/share/webogram && make package && mv package_dist ../ && rm -rf * && mv ../package_dist/* ./ && rm -fr ../package_dist
 	rm -fr $(STAGING_DIR)/share/webogram/.git $(STAGING_DIR)/share/webogram/.gitignore

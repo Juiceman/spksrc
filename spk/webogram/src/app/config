@@ -6,8 +6,8 @@
             "icon": "images/webogram-{0}.png",
             "type": "url",
             "protocol": "http",
-            "port": "8000",
-            "url": "/app/index.html",
+            "port": "80",
+            "url": "/webogram",
             "allUsers": true
         }
     }
