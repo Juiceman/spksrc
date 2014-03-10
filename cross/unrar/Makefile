@@ -9,10 +9,15 @@ DEPENDS =
 
 HOMEPAGE = http://rarlab.com/
 COMMENT  = Extract files from rar archives
-LICENSE  = 
+LICENSE  =
 
 CONFIGURE_TARGET = nop
 INSTALL_TARGET = myInstall
+
+ADDITIONAL_CXXFLAGS =
+ifeq ($(findstring $(ARCH),evansport cedarview bromolow x86),$(ARCH))
+ADDITIONAL_CXXFLAGS = -O2
+endif
 
 include ../../mk/spksrc.cross-cc.mk
 
