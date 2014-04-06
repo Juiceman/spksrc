@@ -15,4 +15,49 @@
             "desc": "Pydio password"
         }]
     }]
+}, {
+    "step_title": "Pydio admin configuration",
+    "items": [{
+        "type": "textfield",
+        "desc": "Administrator's login. Defaults to admin",
+        "subitems": [{
+            "key": "wizard_pydio_admin_username",
+            "desc": "User name",
+            "defaultValue": "admin",
+            "validator": {
+                "allowBlank": false
+            }
+        }]
+    }, {
+        "type": "password",
+        "desc": "Administrator's password. Defaults to admin",
+        "subitems": [{
+            "key": "wizard_pydio_admin_password",
+            "desc": "Password",
+            "defaultValue": "admin",
+            "validator": {
+                "allowBlank": false
+            }
+        }]
+    }, {
+        "type": "textfield",
+        "desc": "Pydio data directory",
+        "subitems": [{
+            "key": "wizard_pydio_datadirectory",
+            "desc": "Directory",
+            "defaultValue": "/volume1/pydio",
+            "validator": {
+                "allowBlank": false,
+                "regex": {
+                    "expr": "/^\\\/volume[0-9]+\\\//",
+                    "errorText": "Path should begin with /volume?/ with ? the number of the volume"
+                }
+            }
+        }]
+    }]
+},{
+    "step_title": "Warning!",
+    "items": [{
+        "desc": "In order for Pydio to work, you have to add the path of your data directory to the open_basedir. To do so, go to Control Panel > Web Services > PHP Settings."
+    }]
 }]

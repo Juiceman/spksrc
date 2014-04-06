@@ -1,6 +1,6 @@
 SPK_NAME = pydio
 SPK_VERS =5.2.3
-SPK_REV = 1
+SPK_REV = 4
 SPK_ICON = src/pydio.png
 DSM_UI_DIR = app
 

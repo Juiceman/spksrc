@@ -31,6 +31,13 @@ preinst ()
             echo "MySQL database ${MYSQL_DATABASE} already exists"
             exit 1
         fi
+
+        # Check directory
+        if [ ! -d ${wizard_pydio_datadirectory:=/volume1/pydio} ]; then
+            echo "Directory does not exist"
+            exit 1
+        fi
+
     fi
 
     exit 0
@@ -46,10 +53,24 @@ postinst ()
 
     if [ "${SYNOPKG_PKG_STATUS}" == "INSTALL" ]; then
         ${MYSQL} -u root -p"${wizard_mysql_password_root}" -e "CREATE DATABASE ${MYSQL_DATABASE}; GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'localhost' IDENTIFIED BY '${wizard_mysql_password_pydio}';"
+        sed -i "s#AJXP_INSTALL_PATH.\"/data\"#\"${wizard_pydio_datadirectory:=/volume1/pydio}/data\"#g" ${WEB_DIR}/${PACKAGE}/conf/bootstrap_context.php
+        sed -i "s#AJXP_INSTALL_PATH.\"/data/cache\"#\"${wizard_pydio_datadirectory:=/volume1/pydio}/data/cache\"#g" ${WEB_DIR}/${PACKAGE}/conf/bootstrap_context.php
+        sed -i "s#AJXP_DATA_PATH.\"/cache\"#\"${wizard_pydio_datadirectory:=/volume1/pydio}/cache\"#g" ${WEB_DIR}/${PACKAGE}/conf/bootstrap_context.php
     fi
+
+    #copy data dirs to user selected stuff and create cache dir
+    cp -pR ${INSTALL_DIR}/share/${PACKAGE}/data "${wizard_pydio_datadirectory:=/volume1/pydio}"
+    mkdir "${wizard_pydio_datadirectory:=/volume1/pydio}"/cache
+
+    #skip installation prompt
+    #touch "${wizard_pydio_datadirectory:=/volume1/pydio}"/cache/admin_counted
+    #touch "${wizard_pydio_datadirectory:=/volume1/pydio}"/cache/first_run_passed
+    #touch "${wizard_pydio_datadirectory:=/volume1/pydio}"/cache/diag_result.php
 
     # Fix permissions
     chown -R ${USER} ${WEB_DIR}/${PACKAGE}
+    chown -R ${USER} "${wizard_pydio_datadirectory:=/volume1/pydio}"
+
     exit 0
 }
 
