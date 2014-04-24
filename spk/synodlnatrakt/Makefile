@@ -1,6 +1,6 @@
 SPK_NAME = synodlnatrakt
 SPK_VERS = $(shell date +%Y%m%d)
-SPK_REV = 3
+SPK_REV = 4
 SPK_ICON = src/synodlnatrakt.png
 DSM_UI_DIR = app
 
