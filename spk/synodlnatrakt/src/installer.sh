@@ -16,6 +16,7 @@ GIT="${GIT_DIR}/bin/git"
 VIRTUALENV="${PYTHON_DIR}/bin/virtualenv"
 TMP_DIR="${SYNOPKG_PKGDEST}/../../@tmp"
 
+PG_USER="$([ $(grep buildnumber /etc.defaults/VERSION | cut -d"\"" -f2) -ge 4418 ] && echo -n postgres || echo -n admin)"
 
 preinst ()
 {
@@ -42,6 +43,14 @@ postinst ()
 
     # Correct the files ownership
     chown -R ${USER}:root ${SYNOPKG_PKGDEST}
+    if [ "${SYNOPKG_PKG_STATUS}" == "INSTALL" ]; then
+        sed -e "s|@pg_usr@|${PG_USER}|" ${INSTALL_DIR}/var/config.ini > ${INSTALL_DIR}/var/config.ini
+    fi
+
+    if [ "${SYNOPKG_PKG_STATUS}" == "UPGRADE" ]; then
+        sed -e "s|postgres_user = .*|postgres_user = ${PG_USER}|" ${INSTALL_DIR}/var/config.ini > ${INSTALL_DIR}/var/config.ini
+    fi
+
 
 
     #check for debugmode and anable it...
