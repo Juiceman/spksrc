@@ -44,11 +44,11 @@ postinst ()
     # Correct the files ownership
     chown -R ${USER}:root ${SYNOPKG_PKGDEST}
     if [ "${SYNOPKG_PKG_STATUS}" == "INSTALL" ]; then
-        sed -e "s|@pg_usr@|${PG_USER}|" ${INSTALL_DIR}/var/config.ini > ${INSTALL_DIR}/var/config.ini
+        sed -i -e "s|@pg_usr@|${PG_USER}|" ${INSTALL_DIR}/var/config.ini
     fi
 
     if [ "${SYNOPKG_PKG_STATUS}" == "UPGRADE" ]; then
-        sed -e "s|postgres_user = .*|postgres_user = ${PG_USER}|" ${INSTALL_DIR}/var/config.ini > ${INSTALL_DIR}/var/config.ini
+        sed -i -e "s|postgres_user = .*|postgres_user = ${PG_USER}|" ${INSTALL_DIR}/var/config.ini
     fi
 
 
