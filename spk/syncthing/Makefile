@@ -1,6 +1,6 @@
 SPK_NAME = syncthing
-SPK_VERS = v0.8.11
-SPK_REV = 4
+SPK_VERS = v0.8.12
+SPK_REV = 3
 SPK_ICON = src/syncthing.png
 DSM_UI_DIR = app
 BETA = 1
@@ -16,8 +16,6 @@ DISPLAY_NAME = Syncthing
 HOMEPAGE   = http://www.syncthing.net/
 LICENSE    =
 
-WIZARDS_DIR = src/wizard/
-
 INSTALLER_SCRIPT = src/installer.sh
 SSS_SCRIPT       = src/dsm-control.sh
 
@@ -25,7 +23,7 @@ INSTALL_PREFIX = /usr/local/$(SPK_NAME)
 
 POST_STRIP_TARGET = syncthing_extra_install
 
-BUSYBOX_CONFIG = usrmng daemon
+BUSYBOX_CONFIG = usrmng daemon nice
 ENV += BUSYBOX_CONFIG="$(BUSYBOX_CONFIG)"
 
 include ../../mk/spksrc.spk.mk
