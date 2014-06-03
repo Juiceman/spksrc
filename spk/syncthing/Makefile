@@ -25,7 +25,7 @@ INSTALL_PREFIX = /usr/local/$(SPK_NAME)
 
 POST_STRIP_TARGET = syncthing_extra_install
 
-BUSYBOX_CONFIG = usrmng
+BUSYBOX_CONFIG = usrmng daemon
 ENV += BUSYBOX_CONFIG="$(BUSYBOX_CONFIG)"
 
 include ../../mk/spksrc.spk.mk
