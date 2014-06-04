@@ -1,9 +1,9 @@
 SPK_NAME = ffmpeg
-SPK_VERS = 2.1
+SPK_VERS = 2.2.1
 SPK_REV = 1
 SPK_ICON = src/ffmpeg.png
 DSM_UI_DIR = app
-CHANGELOG = updated ffmpeg to 2.1
+CHANGELOG = updated ffmpeg to 2.2.1
 
 DEPENDS = cross/$(SPK_NAME)
 
