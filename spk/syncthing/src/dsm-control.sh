@@ -14,7 +14,7 @@ CONFIG_DIR="${INSTALL_DIR}/var/"
 
 start_daemon ()
 {
-    start-stop-daemon -b -o -c ${USER} -S -u ${USER} -x ${SYNCTHING} -- --home ${CONFIG_DIR}
+    start-stop-daemon -b -o -c ${USER} -S -u ${USER} -x env HOME=${CONFIG_DIR} ${SYNCTHING} -- --home ${CONFIG_DIR}
     #su - ${USER} -c "PATH=${PATH} ${SYNCTHING} --home ${CONFIG_DIR}"
 }
 

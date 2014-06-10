@@ -1,6 +1,6 @@
 SPK_NAME = syncthing
-SPK_VERS = v0.8.12
-SPK_REV = 3
+SPK_VERS = v0.8.14
+SPK_REV = 1
 SPK_ICON = src/syncthing.png
 DSM_UI_DIR = app
 BETA = 1

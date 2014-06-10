@@ -1,5 +1,5 @@
 PKG_NAME = syncthing
-PKG_VERS = v0.8.12
+PKG_VERS = v0.8.14
 PKG_EXT = tar.gz
 PKG_DIST_NAME = $(PKG_NAME)-linux-$(SYNCTHING_ARCH)-$(PKG_VERS).$(PKG_EXT)
 PKG_DIST_SITE = https://github.com/calmh/syncthing/releases/download/$(PKG_VERS)
