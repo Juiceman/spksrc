@@ -20,6 +20,12 @@ postinst ()
     # Link
     ln -s ${SYNOPKG_PKGDEST} ${INSTALL_DIR}
 
+    #create DATA dir if it doesn't exist and symlink it
+    if [ !-e ${SYNOPKG_PKGDEST}/var/DATA ]; then
+        mkdir ${SYNOPKG_PKGDEST}/var/DATA
+    fi
+    ln -s ${SYNOPKG_PKGDEST}/var/DATA ${SYNOPKG_PKGDEST}/share/yacy/DATA
+
     exit 0
 }
 

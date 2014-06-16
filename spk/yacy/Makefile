@@ -1,9 +1,10 @@
 SPK_NAME = yacy
 SPK_VERS = v1.72
-SPK_REV = 1
+SPK_REV = 2
 SPK_ICON = src/yacy.png
 DSM_UI_DIR = app
 BETA = 1
+CHANGELOG = use symlink for DATA dir in var/DATA
 
 DEPENDS  =
 SPK_DEPENDS = "JavaManager"
