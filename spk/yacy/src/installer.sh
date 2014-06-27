@@ -53,7 +53,7 @@ preupgrade ()
     # Save some stuff
     rm -fr ${TMP_DIR}/${PACKAGE}
     mkdir -p ${TMP_DIR}/${PACKAGE}
-    mv ${INSTALL_DIR}/share/DATA ${TMP_DIR}/${PACKAGE}/
+    mv ${INSTALL_DIR}/var ${TMP_DIR}/${PACKAGE}/
 
     exit 0
 }
@@ -61,8 +61,8 @@ preupgrade ()
 postupgrade ()
 {
     # Restore some stuff
-    rm -fr ${INSTALL_DIR}/share/DATA
-    mv ${TMP_DIR}/${PACKAGE}/share/DATA ${INSTALL_DIR}/
+    rm -fr ${INSTALL_DIR}/var
+    mv ${TMP_DIR}/${PACKAGE}/var ${INSTALL_DIR}/
     rm -fr ${TMP_DIR}/${PACKAGE}
 
     exit 0

@@ -1,6 +1,6 @@
 SPK_NAME = yacy
 SPK_VERS = v1.72
-SPK_REV = 2
+SPK_REV = 3
 SPK_ICON = src/yacy.png
 DSM_UI_DIR = app
 BETA = 1
