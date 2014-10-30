@@ -1,0 +1,72 @@
+PKG_NAME = GoPostStuff
+PKG_VERS = 0.2.0
+PKG_EXT = tar.gz
+PKG_DIST_NAME = v$(PKG_VERS).$(PKG_EXT)
+PKG_DIST_SITE = https://github.com/madcowfred/GoPostStuff/archive
+PKG_DIR = $(PKG_NAME)-$(PKG_VERS)
+
+DEPENDS = native/go
+
+HOMEPAGE = http://www.syncthing.net/
+COMMENT  = Syncthing replaces Dropbox and BitTorrent Sync with something open, trustworthy and decentralized. Your data is your data alone and you deserve to choose where it is stored, if it is shared with some third party and how ...
+LICENSE  =
+
+CONFIGURE_TARGET = myComp
+COMPILE_TARGET = myComp
+INSTALL_TARGET = myInstall
+GNU_CONFIGURE = 1
+CONFIGURE_ARGS =
+
+GOOS = linux
+
+# Define SYNCTHING_ARCH as per SyncThing standards
+ifeq ($(findstring $(ARCH),88f5281 88f6281),$(ARCH))
+SYNCTHING_ARCH = arm
+endif
+ifeq ($(findstring $(ARCH),armada370 armadaxp),$(ARCH))
+SYNCTHING_ARCH = arm
+endif
+ifeq ($(findstring $(ARCH),evansport),$(ARCH))
+SYNCTHING_ARCH = 386
+endif
+ifeq ($(findstring $(ARCH),x86 cedarview bromolow),$(ARCH))
+SYNCTHING_ARCH = amd64
+endif
+ifeq ($(SYNCTHING_ARCH),)
+$(error Unsupported ARCH $(ARCH))
+endif
+
+# ifeq ($(findstring $(SYNCTHING_ARCH),amd64),$(SYNCTHING_ARCH))
+# SYNCTHING_BIN = $(WORK_DIR)/$(PKG_DIR)/bin/linux_amd64/syncthing
+# endif
+
+# ifeq ($(findstring $(SYNCTHING_ARCH),386),$(SYNCTHING_ARCH))
+# SYNCTHING_BIN = $(WORK_DIR)/$(PKG_DIR)/bin/syncthing
+# endif
+
+# ifeq ($(findstring $(SYNCTHING_ARCH),armv7 armv5),$(SYNCTHING_ARCH))
+# SYNCTHING_BIN = $(WORK_DIR)/$(PKG_DIR)/bin/linux_arm/syncthing
+# endif
+
+include ../../mk/spksrc.cross-cc.mk
+
+ENV += GOPATH=$(WORK_DIR)/../../../native/go/work-native/go/
+ENV += PATH=$(WORK_DIR)/../../../native/go/work-native/go/bin/:$$PATH
+ENV += GOOS=$(GOOS)
+ENV += GOARCH=$(SYNCTHING_ARCH)
+#static binarys for DS!
+ENV += CGO_ENABLED=0
+
+myComp:
+	#go is particular about file locations so we have to link it to the native directory to work!
+	mkdir -p $(WORK_DIR)/../../../native/go/work-native/go/src/github.com/madcowfred
+	ln -sf $(WORK_DIR)/$(PKG_DIR) $(WORK_DIR)/../../../native/go/work-native/go/src/github.com/madcowfred/gopoststuff
+	cd $(WORK_DIR)/$(PKG_DIR) && export $(ENV) && go get github.com/madcowfred/GoPostStuff && go build
+
+myInstall:
+	mkdir -p $(STAGING_INSTALL_PREFIX)/bin
+	install -m 755 $(WORK_DIR)/$(PKG_DIR)/$(PKG_NAME)-$(PKG_VERS) $(STAGING_INSTALL_PREFIX)/bin/gopoststuff
+	mkdir -p $(STAGING_INSTALL_PREFIX)/var
+	install -m 755 $(WORK_DIR)/$(PKG_DIR)/sample.conf $(STAGING_INSTALL_PREFIX)/var/gopoststuff.conf
+
+
