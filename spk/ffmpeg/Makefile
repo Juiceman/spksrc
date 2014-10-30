@@ -1,13 +1,16 @@
 SPK_NAME = ffmpeg
-SPK_VERS = 2.2.1
-SPK_REV = 1
+SPK_VERS = 2.4.2
+SPK_REV = 2
 SPK_ICON = src/ffmpeg.png
 DSM_UI_DIR = app
-CHANGELOG = updated ffmpeg to 2.2.1
+CHANGELOG = 1. updated ffmpeg to 2.4.2 \
+2. Enable yasm support on supportet archs \
+3. Enable multithread/multicore on supportet archs \
+4. Added libvorbis support
 
 DEPENDS = cross/$(SPK_NAME)
 
-MAINTAINER = cytec
+MAINTAINER = SynoCommunity
 DESCRIPTION = FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video. It includes libavcodec - the leading audio/video codec library.
 RELOAD_UI = yes
 DISPLAY_NAME = ffmpeg
