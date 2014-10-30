@@ -1,18 +1,18 @@
 PKG_NAME = syncthing
-PKG_VERS = v0.8.17
+PKG_VERS = 0.10.1
 PKG_EXT = tar.gz
-PKG_DIST_NAME = $(PKG_NAME)-linux-$(SYNCTHING_ARCH)-$(PKG_VERS).$(PKG_EXT)
-PKG_DIST_SITE = https://github.com/calmh/syncthing/releases/download/$(PKG_VERS)
-PKG_DIR = $(PKG_NAME)-linux-$(SYNCTHING_ARCH)-$(PKG_VERS)
+PKG_DIST_NAME = v$(PKG_VERS).$(PKG_EXT)
+PKG_DIST_SITE = https://github.com/syncthing/syncthing/archive
+PKG_DIR = $(PKG_NAME)-$(PKG_VERS)
 
-DEPENDS =
+DEPENDS = native/go
 
 HOMEPAGE = http://www.syncthing.net/
 COMMENT  = Syncthing replaces Dropbox and BitTorrent Sync with something open, trustworthy and decentralized. Your data is your data alone and you deserve to choose where it is stored, if it is shared with some third party and how ...
 LICENSE  =
 
-CONFIGURE_TARGET = nop
-COMPILE_TARGET = nop
+CONFIGURE_TARGET = myComp
+COMPILE_TARGET = myComp
 INSTALL_TARGET = myInstall
 GNU_CONFIGURE = 1
 CONFIGURE_ARGS =
@@ -35,6 +35,11 @@ $(error Unsupported ARCH $(ARCH))
 endif
 
 include ../../mk/spksrc.cross-cc.mk
+
+
+myComp:
+	#mkdir -p /home/cytec/spksrc/native/go/work-native/go/src/github.com/syncthing && cd /home/cytec/spksrc/native/go/work-native/go/src/github.com/syncthing && git clone https://github.com/syncthing/syncthing
+	cd /home/cytec/spksrc/native/go/work-native/go/src/github.com/syncthing/syncthing && export $(ENV) && export GOOS=linux && export GOARCH=amd64 && export CGO_ENABLED=0 && export GOROOT=/home/cytec/spksrc/native/go/work-native/go/ && /home/cytec/spksrc/native/go/work-native/go/bin/go run build.go -goos linux -goarch amd64
 
 myInstall:
 	mkdir -p $(STAGING_INSTALL_PREFIX)/bin
