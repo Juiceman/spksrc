@@ -1,5 +1,5 @@
 PKG_NAME = syncthing
-PKG_VERS = 0.10.1
+PKG_VERS = 0.10.4
 PKG_EXT = tar.gz
 PKG_DIST_NAME = v$(PKG_VERS).$(PKG_EXT)
 PKG_DIST_SITE = https://github.com/syncthing/syncthing/archive
@@ -16,6 +16,8 @@ COMPILE_TARGET = myComp
 INSTALL_TARGET = myInstall
 GNU_CONFIGURE = 1
 CONFIGURE_ARGS =
+
+GOOS = linux
 
 # Define SYNCTHING_ARCH as per SyncThing standards
 ifeq ($(findstring $(ARCH),88f5281 88f6281),$(ARCH))
@@ -34,15 +36,35 @@ ifeq ($(SYNCTHING_ARCH),)
 $(error Unsupported ARCH $(ARCH))
 endif
 
+ifeq ($(findstring $(SYNCTHING_ARCH),amd64),$(SYNCTHING_ARCH))
+SYNCTHING_BIN = $(WORK_DIR)/$(PKG_DIR)/bin/linux_amd64/syncthing
+endif
+
+ifeq ($(findstring $(SYNCTHING_ARCH),386),$(SYNCTHING_ARCH))
+SYNCTHING_BIN = $(WORK_DIR)/$(PKG_DIR)/bin/syncthing
+endif
+
+ifeq ($(findstring $(SYNCTHING_ARCH),armv7 armv5),$(SYNCTHING_ARCH))
+SYNCTHING_BIN = $(WORK_DIR)/$(PKG_DIR)/bin/linux_arm/syncthing
+endif
+
 include ../../mk/spksrc.cross-cc.mk
 
+ENV += GOPATH=$(WORK_DIR)/../../../native/go/work-native/go/
+ENV += PATH=$(WORK_DIR)/../../../native/go/work-native/go/bin/:$$PATH
+ENV += GOOS=$(GOOS)
+ENV += GOARCH=386
+#static binarys for DS!
+ENV += CGO_ENABLED=0
 
 myComp:
-	#mkdir -p /home/cytec/spksrc/native/go/work-native/go/src/github.com/syncthing && cd /home/cytec/spksrc/native/go/work-native/go/src/github.com/syncthing && git clone https://github.com/syncthing/syncthing
-	cd /home/cytec/spksrc/native/go/work-native/go/src/github.com/syncthing/syncthing && export $(ENV) && export GOOS=linux && export GOARCH=amd64 && export CGO_ENABLED=0 && export GOROOT=/home/cytec/spksrc/native/go/work-native/go/ && /home/cytec/spksrc/native/go/work-native/go/bin/go run build.go -goos linux -goarch amd64
+	#go is particular about file locations so we have to link it to the native directory to work!
+	mkdir -p $(WORK_DIR)/../../../native/go/work-native/go/src/github.com/syncthing
+	ln -sf $(WORK_DIR)/$(PKG_DIR) $(WORK_DIR)/../../../native/go/work-native/go/src/github.com/syncthing/syncthing
+	cd $(WORK_DIR)/$(PKG_DIR) && export $(ENV) && go run build.go clean && go run build.go -no-upgrade -goos=linux -goarch=$(SYNCTHING_ARCH) -version=v$(PKG_VERS)
 
 myInstall:
 	mkdir -p $(STAGING_INSTALL_PREFIX)/bin
-	install -m 755 $(WORK_DIR)/$(PKG_DIR)/syncthing $(STAGING_INSTALL_PREFIX)/bin/
+	install -m 755 $(SYNCTHING_BIN) $(STAGING_INSTALL_PREFIX)/bin/
 
 
