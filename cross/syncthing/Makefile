@@ -1,5 +1,5 @@
 PKG_NAME = syncthing
-PKG_VERS = 0.10.4
+PKG_VERS = 0.10.5
 PKG_EXT = tar.gz
 PKG_DIST_NAME = v$(PKG_VERS).$(PKG_EXT)
 PKG_DIST_SITE = https://github.com/syncthing/syncthing/archive
@@ -11,13 +11,13 @@ HOMEPAGE = http://www.syncthing.net/
 COMMENT  = Syncthing replaces Dropbox and BitTorrent Sync with something open, trustworthy and decentralized. Your data is your data alone and you deserve to choose where it is stored, if it is shared with some third party and how ...
 LICENSE  =
 
-CONFIGURE_TARGET = myComp
+CONFIGURE_TARGET = nope
 COMPILE_TARGET = myComp
 INSTALL_TARGET = myInstall
-GNU_CONFIGURE = 1
-CONFIGURE_ARGS =
 
 GOOS = linux
+# set this to 1 to create static linked binaries
+STATIC_BINARIES = 0
 
 # Define SYNCTHING_ARCH as per SyncThing standards
 ifeq ($(findstring $(ARCH),88f5281 88f6281),$(ARCH))
@@ -52,16 +52,19 @@ include ../../mk/spksrc.cross-cc.mk
 
 ENV += GOPATH=$(WORK_DIR)/../../../native/go/work-native/go/
 ENV += PATH=$(WORK_DIR)/../../../native/go/work-native/go/bin/:$$PATH
-ENV += GOOS=$(GOOS)
-ENV += GOARCH=386
-#static binarys for DS!
-ENV += CGO_ENABLED=0
+
+CONF_ARGS = -goos=$(GOOS) -goarch=$(SYNCTHING_ARCH) -version=v$(PKG_VERS)
+
+ifeq ($(strip $(STATIC_BINARIES)),1)
+ENV += CGO_ENABLED=1
+CONF_ARGS += -no-upgrade
+endif
 
 myComp:
 	#go is particular about file locations so we have to link it to the native directory to work!
 	mkdir -p $(WORK_DIR)/../../../native/go/work-native/go/src/github.com/syncthing
 	ln -sf $(WORK_DIR)/$(PKG_DIR) $(WORK_DIR)/../../../native/go/work-native/go/src/github.com/syncthing/syncthing
-	cd $(WORK_DIR)/$(PKG_DIR) && export $(ENV) && go run build.go clean && go run build.go -no-upgrade -goos=linux -goarch=$(SYNCTHING_ARCH) -version=v$(PKG_VERS)
+	cd $(WORK_DIR)/$(PKG_DIR) && export $(ENV) && go run build.go clean && go run build.go $(CONF_ARGS)
 
 myInstall:
 	mkdir -p $(STAGING_INSTALL_PREFIX)/bin
