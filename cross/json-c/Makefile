@@ -7,8 +7,8 @@ PKG_DIR = $(PKG_NAME)-$(PKG_NAME)-$(PKG_VERS)
 
 DEPENDS =
 
-HOMEPAGE = http://labs.bittorrent.com/experiments/sync.html
-COMMENT  = Automatically sync files via secure, distributed technology
+HOMEPAGE = https://github.com/json-c/
+COMMENT  = JSON-C implements a reference counting object model that allows you to easily construct JSON objects in C, output them as JSON formatted strings and parse JSON formatted strings back into the C representation of JSON objects.
 LICENSE  =
 
 GNU_CONFIGURE = 1
