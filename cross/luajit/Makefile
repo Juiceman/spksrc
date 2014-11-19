@@ -5,10 +5,10 @@ PKG_DIST_NAME = $(PKG_NAME)-$(PKG_VERS).$(PKG_EXT)
 PKG_DIST_SITE = http://luajit.org/download
 PKG_DIR = $(PKG_NAME)-$(PKG_VERS)
 
-DEPENDS = native/lua
+DEPENDS =
 
-HOMEPAGE = http://www.libpng.org/pub/png/libpng.html
-COMMENT  = Portable Network Graphics Library
+HOMEPAGE = http://luajit.org/
+COMMENT  = LuaJIT is a Just-In-Time Compiler (JIT) for the Lua programming language.
 
 CONFIGURE_TARGET = nope
 COMPILE_TARGET = myCompile
@@ -19,7 +19,7 @@ include ../../mk/spksrc.cross-cc.mk
 
 
 myCompile:
-	$(RUN) make clean && make CROSS=$(TC_PATH)$(TC_PREFIX) LDFLAGS="-Wl,-export-dynamic" CFLAGS= CC="gcc -m32"
+	$(RUN) make CROSS=$(TC_PATH)$(TC_PREFIX) LDFLAGS="-Wl,-export-dynamic" CFLAGS= HOST_CC="gcc"
 
 
 myInstall:
