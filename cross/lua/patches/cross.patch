@@ -1,0 +1,20 @@
+--- src/Makefile.orig	2013-11-11 12:45:49.000000000 +0100
++++ src/Makefile	2014-10-31 07:28:55.000000000 +0100
+@@ -6,13 +6,13 @@
+ # Your platform. See PLATS for possible values.
+ PLAT= none
+ 
+-CC= gcc
+-CFLAGS= -O2 -Wall -DLUA_COMPAT_ALL $(SYSCFLAGS) $(MYCFLAGS)
++CC= $(CROSS)gcc
++CFLAGS= -O2 -Wall $(SYSCFLAGS) $(MYCFLAGS)
+ LDFLAGS= $(SYSLDFLAGS) $(MYLDFLAGS)
+ LIBS= -lm $(SYSLIBS) $(MYLIBS)
+ 
+-AR= ar rcu
+-RANLIB= ranlib
++AR= $(CROSS)ar rcu
++RANLIB= $(CROSS)ranlib
+ RM= rm -f
+ 
+ SYSCFLAGS=

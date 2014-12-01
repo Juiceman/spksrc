@@ -1,0 +1,14 @@
+{
+    ".url": {
+        "com.synocommunity.packages.yacy": {
+            "title": "YaCy",
+            "desc": "yacy",
+            "icon": "images/yacy-{0}.png",
+            "type": "url",
+            "protocol": "http",
+            "port": "8090",
+            "url": "/",
+            "allUsers": true
+        }
+    }
+}

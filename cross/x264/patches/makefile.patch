@@ -1,0 +1,24 @@
+--- Makefile.orig	2014-10-29 15:15:23.946558517 +0100
++++ Makefile	2014-10-29 15:15:31.542698640 +0100
+@@ -95,6 +95,21 @@
+ ASMSRC   = $(X86SRC:-32.asm=-64.asm) common/x86/trellis-64.asm
+ endif
+
++ifeq ($(ARCH),bromolow)
++ARCH_X86 = yes
++ASMSRC = $(X86SRC:-32.asm=-64.asm) common/x86/trellis-64.asm
++endif
++
++ifeq ($(ARCH),x86)
++ARCH_X86 = yes
++ASMSRC = $(X86SRC:-32.asm=-64.asm) common/x86/trellis-64.asm
++endif
++
++ifeq ($(ARCH),cedarview)
++ARCH_X86 = yes
++ASMSRC = $(X86SRC:-32.asm=-64.asm) common/x86/trellis-64.asm
++endif
++
+ ifdef ARCH_X86
+ SRCS   += common/x86/mc-c.c common/x86/predict-c.c
+ OBJASM  = $(ASMSRC:%.asm=%.o)

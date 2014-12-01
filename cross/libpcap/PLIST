@@ -1,0 +1,5 @@
+bin:bin/pcap-config
+lnk:lib/libpcap.so
+lnk:lib/libpcap.so.1
+lib:lib/libpcap.so.1.6.2
+

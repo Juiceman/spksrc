@@ -1,0 +1,2 @@
+bin:bin/geoipupdate
+shr:etc/GeoIP.conf
