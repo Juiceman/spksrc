@@ -11,14 +11,15 @@ PATH="${INSTALL_DIR}/bin:${INSTALL_DIR}/env/bin:${PYTHON_DIR}/bin:/usr/local/bin
 USER="plexivity"
 PYTHON="${INSTALL_DIR}/env/bin/python"
 PLEXIVITY="${INSTALL_DIR}/share/plexivity/plexivity.py"
-CFG_FILE="${INSTALL_DIR}/share/plexivity/config.ini"
-PID_FILE="${INSTALL_DIR}/var/plexivity.pid"
-LOG_FILE="${INSTALL_DIR}/var/plexivity.log"
+DATA_DIR="${INSTALL_DIR}/var/"
+CFG_FILE="${DATA_DIR}/config.ini"
+PID_FILE="${DATA_DIR}/plexivity.pid"
+LOG_FILE="${DATA_DIR}/plexivity.log"
 
 
 start_daemon ()
 {
-    su - ${USER} -c "PATH=${PATH} ${PYTHON} ${PLEXIVITY} --daemon"
+    su - ${USER} -c "PATH=${PATH} PLEXIVITY_DATA=${DATA_DIR} ${PYTHON} ${PLEXIVITY} --daemon"
 }
 
 stop_daemon ()

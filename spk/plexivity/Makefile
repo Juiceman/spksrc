@@ -1,6 +1,6 @@
 SPK_NAME = plexivity
-SPK_VERS = 0.9.2-1
-SPK_REV = 5
+SPK_VERS = 0.9.3-1
+SPK_REV = 7
 SPK_ICON = src/plexivity.png
 DSM_UI_DIR = app
 BETA = 1
@@ -46,7 +46,7 @@ plexivity_extra_install: $(STAGING_DIR)/share/plexivity
 $(STAGING_DIR)/share/plexivity:
 	install -m 755 -d $(STAGING_DIR)/share
 	cd $(STAGING_DIR)/share && git clone https://bitbucket.org/raphaelmutschler/plexivity.git plexivity 
-	cd $(STAGING_DIR)/share/plexivity && git checkout 0.9.2-1
+	cd $(STAGING_DIR)/share/plexivity && git checkout $(SPK_VERS)
 	cd $(STAGING_DIR)/share/plexivity && rm -rf .git && rm .gitignore
 	@$(MSG) "Bundling requirements"
 	@cd $(WORK_DIR) && $(PIP) bundle --no-use-wheel -r $(STAGING_DIR)/share/plexivity/requirements.txt $(STAGING_DIR)/share/requirements.pybundle
