@@ -28,6 +28,9 @@ PPC_ARCHES = powerpc ppc824x ppc853x ppc854x qoriq
 x86_ARCHES = evansport
 x64_ARCHES = avoton bromolow cedarview x86 x64
 
+# Disable ccache usage
+DISABLE_CCACHE =
+
 # Load local configuration
 LOCAL_CONFIG_MK = ../../local.mk
 ifneq ($(wildcard $(LOCAL_CONFIG_MK)),)

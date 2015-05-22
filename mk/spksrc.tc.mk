@@ -37,8 +37,13 @@ include ../../mk/spksrc.tc-fix.mk
 
 all: fix
 
+ifeq ($(strip $(DISABLE_CCACHE)),)
+TOOLS = ld cpp nm as ranlib ar strip objdump readelf ldshared:"gcc -shared" 
+CCACHE_TOOLS = cc:gcc cxx:g++
+else
+TOOLS = ld cpp nm as ranlib ar strip objdump readelf ldshared:"gcc -shared" cc:gcc cxx:g++
+endif
 
-TOOLS = ld ldshared:"gcc -shared" cpp nm cc:gcc as ranlib cxx:g++ ar strip objdump readelf
 
 CFLAGS += $(TC_CFLAGS)
 CFLAGS += -I$(INSTALL_DIR)/$(INSTALL_PREFIX)/include
@@ -64,6 +69,15 @@ tc_vars: patch
 	  source=`echo $${tool} | sed 's/\(.*\):\(.*\)/\2/'` ; \
 	  echo TC_ENV += `echo $${target} | tr [:lower:] [:upper:] `=\"$(WORK_DIR)/$(TC_BASE_DIR)/bin/$(TC_PREFIX)-$${source}\" ; \
 	done
+	@for tool in $(CCACHE_TOOLS) ; \
+	do \
+	  target=`echo $${tool} | sed 's/\(.*\):\(.*\)/\1/'` ; \
+	  source=`echo $${tool} | sed 's/\(.*\):\(.*\)/\2/'` ; \
+	  echo TC_ENV += `echo $${target} | tr [:lower:] [:upper:] `=\"$(TC_PREFIX)-ccache-$${source}\" ; \
+	  ln -sf $(WORK_DIR)/$(TC_BASE_DIR)/bin/$(TC_PREFIX)-$${source} $(WORK_DIR)/$(TC_BASE_DIR)/bin/$(TC_PREFIX)-ccache-$${source} ; \
+	  ln -sf `which ccache` $(WORK_DIR)/$(TC_BASE_DIR)/$(TC_PREFIX)-ccache-$${source} ; \
+	done
+	@echo TC_ENV += PATH=$(WORK_DIR)/$(TC_BASE_DIR)/:$$PATH:$(WORK_DIR)/$(TC_BASE_DIR)/bin/
 	@echo TC_ENV += CFLAGS=\"$(CFLAGS) $$\(ADDITIONAL_CFLAGS\)\"
 	@echo TC_ENV += CPPFLAGS=\"$(CPPFLAGS) $$\(ADDITIONAL_CPPFLAGS\)\"
 	@echo TC_ENV += CXXFLAGS=\"$(CXXFLAGS) $$\(ADDITIONAL_CXXFLAGS\)\"
